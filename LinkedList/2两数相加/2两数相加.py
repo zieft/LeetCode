@@ -46,12 +46,14 @@ def create_linklist_tail(li):
     return head
 
 
-l1 = create_linklist_tail([1, 2, 3, 4, 5, 6, 7])
-l2 = create_linklist_tail([1, 2])
+l1 = create_linklist_tail([2, 4, 3])
+l2 = create_linklist_tail([5, 6, 4])
 
 res = Solution.addTwoNumbers(l1, l2)
 print(res)
 
-while res.next:
+if __name__ == '__main__':
     print(res.val)
-    res = res.next
+    while res.next:
+        res = res.next
+        print(res.val)
