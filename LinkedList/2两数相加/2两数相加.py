@@ -31,9 +31,4 @@ if __name__ == '__main__':
     l2 = sol.create_linklist_tail([5, 6, 4])
 
     res = sol.addTwoNumbers(l1, l2)
-    print(res)
-    """输出708"""
-    print(res.val)
-    while res.next:
-        res = res.next
-        print(res.val)
+    sol.print_LinkedList(res)

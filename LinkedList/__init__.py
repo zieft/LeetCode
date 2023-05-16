@@ -14,3 +14,10 @@ class BaseSolution:
             tail.next = node
             tail = node
         return head
+
+    def print_LinkedList(self, res: ListNode):
+        """print a LinkedList node by node from beginning to the end"""
+        print(res.val)
+        while res.next:
+            res = res.next
+            print(res.val)
