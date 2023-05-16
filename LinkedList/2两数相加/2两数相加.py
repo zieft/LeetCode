@@ -1,13 +1,9 @@
 # Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from LinkedList import ListNode, BaseSolution
 
 
-class Solution:
-    @staticmethod
-    def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
+class Solution(BaseSolution):
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         # 初始化个位节点，先不做进位
         newPoint = ListNode(l1.val + l2.val)
 
@@ -29,30 +25,14 @@ class Solution:
         return newPoint
 
 
-"""
-输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
-输出：[8,9,9,9,0,0,0,1]
-"""
-
-
-# 尾插法将列表转换成链表的头节点
-def create_linklist_tail(li):
-    head = ListNode(li[0])
-    tail = head
-    for element in li[1:]:
-        node = ListNode(element)
-        tail.next = node
-        tail = node
-    return head
-
-
-l1 = create_linklist_tail([2, 4, 3])
-l2 = create_linklist_tail([5, 6, 4])
-
-res = Solution.addTwoNumbers(l1, l2)
-print(res)
-
 if __name__ == '__main__':
+    sol = Solution()
+    l1 = sol.create_linklist_tail([2, 4, 3])
+    l2 = sol.create_linklist_tail([5, 6, 4])
+
+    res = sol.addTwoNumbers(l1, l2)
+    print(res)
+    """输出708"""
     print(res.val)
     while res.next:
         res = res.next
