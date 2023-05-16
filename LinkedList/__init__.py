@@ -3,6 +3,9 @@ class ListNode(object):
         self.val = val
         self.next = next
 
+    def __str__(self):
+        return "当前节点： {}".format(self.val)
+
 
 class BaseSolution:
     def create_linklist_tail(self, li):
