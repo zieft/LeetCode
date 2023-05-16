@@ -17,7 +17,9 @@ class BaseSolution:
 
     def print_LinkedList(self, res: ListNode):
         """print a LinkedList node by node from beginning to the end"""
-        print(res.val)
+        output = []
+        output.append(res.val)
         while res.next:
             res = res.next
-            print(res.val)
+            output.append(res.val)
+        print(output)
