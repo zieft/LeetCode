@@ -13,8 +13,9 @@ Output: [1,1,2,3,4,4]
 
 
 class Solution(BaseSolution):
-    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+    def mergeTwoLists_recursive(self, l1: ListNode, l2: ListNode) -> ListNode:
         """
+        递归
         时间复杂度：O(n)
         空间复杂度：【考虑递归开栈】O(n)【不考虑】O(1)
         """
@@ -24,10 +25,36 @@ class Solution(BaseSolution):
             if l1.val > l2.val:
                 l1, l2 = l2, l1
             # 递归重复以上过程直至l1、l2其中之一为空
-            l1.next = self.mergeTwoLists(l1.next, l2)
+            l1.next = self.mergeTwoLists_recursive(l1.next, l2)
         # 返回 l1，注意：如果 l1 和 l2 同时为 None，此时递归停止返回 None
         # 有l1的时候返回l1，没有的时候直接返回l2，并赋值给l1.next
         return l1 or l2
+
+    def mergeTwoLists_iterative(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        迭代
+        时间复杂度为 O(n)，其中 n 是两个链表的总长度，因为每个节点都会被访问一次。
+        空间复杂度为 O(1)，因为只使用了常数级别的额外空间，不随输入规模的增加而增加。
+        """
+        dummy = ListNode(0)  # 创建一个哑节点作为合并后链表的头部
+        tail = dummy  # 指向合并后链表的尾部
+
+        while l1 and l2:
+            if l1.val <= l2.val:
+                tail.next = l1
+                l1 = l1.next
+            else:
+                tail.next = l2
+                l2 = l2.next
+            tail = tail.next
+
+        # 将剩余未合并的链表连接到合并链表的尾部
+        if l1:
+            tail.next = l1
+        else:
+            tail.next = l2
+
+        return dummy.next  # 返回合并后链表的头部（去除哑节点）
 
 
 """
@@ -43,5 +70,8 @@ if __name__ == '__main__':
     sol = Solution()
     l1 = sol.create_linklist_tail([1, 2, 4])
     l2 = sol.create_linklist_tail([1, 3, 4])
-    res = sol.mergeTwoLists(l1, l2)
+    res = sol.mergeTwoLists_recursive(l1, l2)
+    sol.print_LinkedList(res)
+    print("______________________________________________")
+    res = sol.mergeTwoLists_iterative(l1, l2)
     sol.print_LinkedList(res)
