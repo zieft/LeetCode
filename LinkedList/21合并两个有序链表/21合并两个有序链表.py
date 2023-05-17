@@ -1,4 +1,4 @@
-from LinkedList import ListNode, BaseSolution
+from LinkedList import ListNode, BaseSolution, cal_time
 
 """
 You are given the heads of two sorted linked lists list1 and list2.
@@ -13,6 +13,7 @@ Output: [1,1,2,3,4,4]
 
 
 class Solution(BaseSolution):
+    @cal_time
     def mergeTwoLists_recursive(self, l1: ListNode, l2: ListNode) -> ListNode:
         """
         递归
@@ -30,6 +31,7 @@ class Solution(BaseSolution):
         # 有l1的时候返回l1，没有的时候直接返回l2，并赋值给l1.next
         return l1 or l2
 
+    @cal_time
     def mergeTwoLists_iterative(self, l1: ListNode, l2: ListNode) -> ListNode:
         """
         迭代
@@ -73,5 +75,7 @@ if __name__ == '__main__':
     res = sol.mergeTwoLists_recursive(l1, l2)
     sol.print_LinkedList(res)
     print("______________________________________________")
+    l1 = sol.create_linklist_tail([1, 2, 4])
+    l2 = sol.create_linklist_tail([1, 3, 4])
     res = sol.mergeTwoLists_iterative(l1, l2)
     sol.print_LinkedList(res)
