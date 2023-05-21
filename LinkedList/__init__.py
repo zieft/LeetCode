@@ -44,19 +44,20 @@ class BaseSolution:
             print(output if output else "None")
 
     def create_linklist_with_circle(self, li, pos):
-        """ 头插法生成带有环的链表 """
-        head = None
+        """ 尾插法生成带有环的链表 """
+        head = ListNode(li[0])
+        tail = head
         length = len(li)
+        first_in_circle = None
 
-        last_before_circle = None
+        for i, item in enumerate(li[1:]):
+            node = ListNode(item)
+            tail.next = node
+            tail = node
+            if i + 1 == pos:
+                first_in_circle = tail
 
-        for i, item in enumerate(li):
-            new_node = ListNode(item)
-            new_node.next = head
-            head = new_node
-            if i == pos:
-                last_before_circle = head
-            if i == length - 1:
-                last_before_circle.next = head
+            if i + 1 == length - 1:
+                tail.next = first_in_circle
 
         return head
