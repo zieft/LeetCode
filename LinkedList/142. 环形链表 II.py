@@ -15,6 +15,13 @@ Explanation: There is a cycle in the linked list, where tail connects to the sec
 
 class Solution(BaseSolution):
     def detectCycle(self, head: ListNode) -> ListNode or None:
+        """
+        快慢指针
+        时间复杂度为 O(N + k + k')，其中 N 是链表的长度，k 是环内慢指针移动的节点数，k' 是从链表头部到环的入口节点的距离。
+        空间复杂度为 O(1)
+        :param head:
+        :return:
+        """
         if not head:
             return
 
