@@ -34,9 +34,29 @@ class BaseSolution:
 
     def print_LinkedList(self, res: ListNode):
         """print a LinkedList node by node from beginning to the end"""
-        output = []
-        output.append(res.val)
-        while res.next:
-            res = res.next
+        if res:
+            output = []
             output.append(res.val)
-        print(output)
+            while res.next:
+                res = res.next
+
+                output.append(res.val)
+            print(output if output else "None")
+
+    def create_linklist_with_circle(self, li, pos):
+        """ 头插法生成带有环的链表 """
+        head = None
+        length = len(li)
+
+        last_before_circle = None
+
+        for i, item in enumerate(li):
+            new_node = ListNode(item)
+            new_node.next = head
+            head = new_node
+            if i == pos:
+                last_before_circle = head
+            if i == length - 1:
+                last_before_circle.next = head
+
+        return head
