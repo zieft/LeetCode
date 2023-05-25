@@ -18,7 +18,7 @@ class ListNode(object):
         self.next = next
 
     def __str__(self):
-        return "当前节点： {}".format(self.val)
+        return "当前节点： {} @ <{}>".format(self.val, id(self))
 
 
 class BaseSolution:
@@ -41,7 +41,7 @@ class BaseSolution:
                 res = res.next
 
                 output.append(res.val)
-            print(output if output else "None")
+            return output if output else None
 
     def create_linklist_with_circle(self, li, pos):
         """ 尾插法生成带有环的链表 """
@@ -61,3 +61,8 @@ class BaseSolution:
                 tail.next = first_in_circle
 
         return head
+
+    def merge_linklist_in_tail(self,old_li:ListNode, new_li: ListNode) -> None:
+        while old_li and old_li.next:
+            old_li = old_li.next
+        old_li.next = new_li
