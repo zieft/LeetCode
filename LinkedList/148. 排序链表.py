@@ -44,10 +44,81 @@ class Solution(BaseSolution):
         cur.next = left if left else right
         return dummy.next
 
+    def sortList_iteration(self, head: ListNode) -> ListNode:
+        """
+        迭代实现的归并排序算法，有点复杂。
+
+        intv定义了当前待合并的子链长度，当此长度大于等于链表长度时，结束合并
+
+        算法首先迭代地获取子链表，然后归并排序。
+
+        时间复杂度： O(n log n)
+        空间复杂度： O(1)
+        """
+
+        cur = head
+        length = 0
+        intv = 1  # 待合并的链表长度
+
+        # 求链表长度，
+        while cur:
+            cur = cur.next
+            length = length + 1
+
+        # 给原链表添加dummy节点
+        dummy = ListNode(0)
+        dummy.next = head
+
+        # 将子链表合并.
+        while intv < length:
+            pre = dummy  # 用于合并链表的指针
+            h = dummy.next  # 用于获取子链表的指针，h每次沿原链表从头遍历到尾
+            while h:
+                # get the two merge head `h1`, `h2`
+                h1 = h
+                i = intv
+                while i and h:
+                    h = h.next
+                    i = i - 1
+                if i:  # h走完，i还不为0，说明h1子链表长度等于原链表
+                    break  # no need to merge because the `h2` is None.
+                h2 = h
+                i = intv
+                while i and h:
+                    h = h.next
+                    i = i - 1
+
+                c1 = intv  # h1的长度（元素数量）
+                c2 = intv - i  # h2的长度（元素数量），可能小于intv
+
+                # 合并h1和h2
+                while c1 and c2:  # 当h1和h2内都存在元素时，执行归并排序
+                    # 将两个子链表较小的一个先插入到pre.next
+                    # 循环结束后一定会剩下一个子链表还有残余
+                    if h1.val < h2.val:
+                        pre.next = h1
+                        h1 = h1.next
+                        c1 = c1 - 1
+                    else:
+                        pre.next = h2
+                        h2 = h2.next
+                        c2 = c2 - 1
+                    pre = pre.next
+
+                pre.next = h1 if c1 else h2  # 归并结束后，将还有残余的子链表直接加到合并后的链表后面
+
+                while c1 > 0 or c2 > 0:  # 将pre指针相应地向后移动
+                    pre = pre.next
+                    c1 = c1 - 1
+                    c2 = c2 - 1
+                pre.next = h
+            intv *= 2  # 将子链表的宽度扩大一倍
+        return dummy.next
+
 
 if __name__ == '__main__':
     sol = Solution()
     l1 = sol.create_linklist_tail([-1, 5, 3, 4, 0])
 
-    res = sol.sortList_recursion(l1)
+    res = sol.sortList_iteration(l1)
     sol.print_LinkedList(res)
