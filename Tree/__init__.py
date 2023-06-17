@@ -249,6 +249,14 @@ class LinkedBinaryTree(BinaryTree):
         p1 = self._add_root(treelist.pop(0))
         while treelist:
             for i in range(2 ** level):
-                exec("p{} = self._add_left(p{}, treelist.pop(0))".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
-                exec("p{} = self._add_right(p{}, treelist.pop(0))".format(2 ** (level + 1) + 2 * i + 1, 2 ** level + i))
-            level += 1
+                try:
+                    left = treelist.pop(0)
+                    if left:
+                        exec("p{} = self._add_left(p{}, left)".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
+                    right = treelist.pop(0)
+                    if right:
+                        exec("p{} = self._add_right(p{}, treelist.pop(0))".format(2 ** (level + 1) + 2 * i + 1,
+                                                                                  2 ** level + i))
+                except IndexError:
+                    break
+                level += 1
