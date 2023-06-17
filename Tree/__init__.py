@@ -255,7 +255,7 @@ class LinkedBinaryTree(BinaryTree):
                         exec("p{} = self._add_left(p{}, left)".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
                     right = treelist.pop(0)
                     if right:
-                        exec("p{} = self._add_right(p{}, treelist.pop(0))".format(2 ** (level + 1) + 2 * i + 1,
+                        exec("p{} = self._add_right(p{}, right".format(2 ** (level + 1) + 2 * i + 1,
                                                                                   2 ** level + i))
                 except IndexError:
                     break
