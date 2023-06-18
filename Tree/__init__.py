@@ -1,3 +1,6 @@
+null = None
+
+
 class Tree:
     class Position:
         def element(self):
@@ -246,17 +249,35 @@ class LinkedBinaryTree(BinaryTree):
 
     def build_tree(self, treelist):
         level = 0
-        p1 = self._add_root(treelist.pop(0))
+        if not treelist:
+            return None
+        queue = [self._add_root(treelist.pop(0))]
         while treelist:
-            for i in range(2 ** level):
+            for _ in range(len(queue)):
+                root = queue.pop(0)
                 try:
                     left = treelist.pop(0)
                     if left:
-                        exec("p{} = self._add_left(p{}, left)".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
-                    right = treelist.pop(0)
-                    if right:
-                        exec("p{} = self._add_right(p{}, right)".format(2 ** (level + 1) + 2 * i + 1,
-                                                                                  2 ** level + i))
+                        left = self._add_left(root, left)
+                        queue.append(left)
                 except IndexError:
                     break
+                try:
+                    right = treelist.pop(0)
+                    if right:
+                        right = self._add_right(root, right)
+                        queue.append(right)
+                except IndexError:
+                    break
+            # for i in range(2 ** level):
+            #     try:
+            #         left = treelist.pop(0)
+            #         if left:
+            #             exec("p{} = self._add_left(p{}, left)".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
+            #         right = treelist.pop(0)
+            #         if right:
+            #             exec("p{} = self._add_right(p{}, right)".format(2 ** (level + 1) + 2 * i + 1,
+            #                                                                       2 ** level + i))
+            #     except IndexError:
+            #         break
             level += 1
