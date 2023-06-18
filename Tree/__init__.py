@@ -248,7 +248,6 @@ class LinkedBinaryTree(BinaryTree):
             t2.size = 0
 
     def build_tree(self, treelist):
-        level = 0
         if not treelist:
             return None
         queue = [self._add_root(treelist.pop(0))]
@@ -269,15 +268,3 @@ class LinkedBinaryTree(BinaryTree):
                         queue.append(right)
                 except IndexError:
                     break
-            # for i in range(2 ** level):
-            #     try:
-            #         left = treelist.pop(0)
-            #         if left:
-            #             exec("p{} = self._add_left(p{}, left)".format(2 ** (level + 1) + 2 * i, 2 ** level + i))
-            #         right = treelist.pop(0)
-            #         if right:
-            #             exec("p{} = self._add_right(p{}, right)".format(2 ** (level + 1) + 2 * i + 1,
-            #                                                                       2 ** level + i))
-            #     except IndexError:
-            #         break
-            level += 1
