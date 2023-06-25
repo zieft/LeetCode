@@ -33,17 +33,21 @@ class Solution:
         }
         self.digits = list(digits)
 
-        def backtrack(combination, index, digits):
+        def backtrack(index):
             # 当把整个问题抽象成树结构的时候，index和len(digits)就是树的深度
             # 记录数据发生在树的叶子上（深度最深的地方）
             if index == len(digits):
-                combinations.append(combination)
-                return  # 结束这个叶子的处理，回溯到父节点
+                combinations.append("".join(combination))
+            else:
+                digit = digits[index]
+                for letter in self.hashmap[digit]:
+                    combination.append(letter)
+                    backtrack(index + 1)
+                    combination.pop()  # 弹出去
 
-            for i in self.hashmap[digits[index]]:  # 横向遍历，访问每一个元素
-                backtrack(combination + i, index + 1, self.digits)  # 纵向遍历，遍历到树的最深处，实质上是DFS
-
-        backtrack('', 0, digits)
+        combination = list()
+        combinations = list()
+        backtrack(0)
         return combinations
 
 
