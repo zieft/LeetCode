@@ -10,31 +10,32 @@
 
 class Solution:
     def exist(self, board: list[list[str]], word: str) -> bool:
-        combination = []
 
         def dfs(board, r, c, index):
-            if not 0 <= r < len(board) or not 0 <= c < len(board[0]) or ([r, c] in mask):
+            if not 0 <= r < len(board) or not 0 <= c < len(board[0]):
+                return
+            if ([r, c] in mask) and board[r, c] != index:
                 return
             if board[r][c][0] == word[index]:
-                combination.append(board[r][c][0])
-                mask.append([r, c])
                 index += 1
-            if index == len(word):
-                self.res = "".join(combination)
+                return True
 
+            mask.append([r, c])
             dfs(board, r + 1, c, index)
             dfs(board, r - 1, c, index)
             dfs(board, r, c + 1, index)
             dfs(board, r, c - 1, index)
+            mask.remove([r, c])
 
         for r in range(len(board)):
             for c in range(len(board[0])):
                 index = 0
                 if board[r][c][0] == word[index]:
                     mask = []
-                    dfs(board, r, c, index)
+                    if dfs(board, r, c, index) == True:
+                        return True
 
-        return self.res == word
+        return False
 
 
 if __name__ == '__main__':
