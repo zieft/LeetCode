@@ -22,18 +22,18 @@ class Solution:
         O(n)
         O(n)
         """
-        dp = [0] * len(cost)
-        dp[0] = cost[0]
-        dp[1] = cost[1]
+        dp = [0] * (len(cost) + 1)
+        dp[0] = 0
+        dp[1] = 0
 
-        for i in range(2, len(cost)):
-            dp[i] = min(dp[i - 1], dp[i - 2] + cost[i])
+        for i in range(2, len(cost) + 1):
+            dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
 
-        return min(dp[len(cost) - 1], dp[len(cost) - 2])
+        return dp[len(cost)]
 
 
 if __name__ == '__main__':
-    cost = [10, 15, 20]
+    cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
     sol = Solution()
     res = sol.minCostClimbingStairs(cost)
     print(res)
