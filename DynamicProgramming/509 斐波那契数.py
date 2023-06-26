@@ -14,21 +14,19 @@ F(n) = F(n - 1) + F(n - 2)，其中 n > 1
 class Solution:
     def fib(self, n: int) -> int:
         """
-        基础动规
+        动规 滚动数组
         O(n)
-        O(n)
+        O(1)
         """
-        if n == 0:
-            return 0
-        dp = [1] * (n + 1)
-        dp[0] = 0
-        dp[1] = 1
+        if n < 2:
+            return n
 
-        if n > 2:
-            for i in range(2, n+1):
-                dp[i] = dp[i - 1] + dp[i - 2]
+        dp_n_2, dp_n_1, dp_n = 0, 0, 1
+        for i in range(2, n + 1):
+            dp_n_2, dp_n_1 = dp_n_1, dp_n
+            dp_n = dp_n_2 + dp_n_1
 
-        return dp[n]
+        return dp_n
 
 
 if __name__ == '__main__':
